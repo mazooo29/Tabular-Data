@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>json api</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+    <style>
+        table, thead{
+            background-color: wheat;
+            align-items: center;
+            text-align: center;
+        }
+    </style>
+    <body>
+        <table border="1" style="border:3px blue solid;" class="table-responsive">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Name</th>
+                    <th>UserName</th>
+                    <th>Email</th>
+                    <th>Address{street,suite,city,zipcode,geo(lat,lng)</th>
+                    <th>Phone</th>
+                    <th>Website</th>
+                    <th>company{name,catchPhrase,bs}</th>
+                </tr>
+            </thead>
+            <tbody id="data-output">
+
+            </tbody>
+        </table>
+        <script src="main.js"></script>
+    </body>
+</html>
