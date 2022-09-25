@@ -10,7 +10,6 @@ function getData(){
         return myArray;
     }); 
 }
-myArray = await getData();
 console.log(myArray)
 // second way
 // async function getDataMain(){
