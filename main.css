@@ -1,0 +1,92 @@
+body{
+    background: rgb(179, 194, 179);
+}
+.tableDiv{
+    height: 100%;
+}
+th:hover{
+    color: rgb(76, 135, 115);
+}
+td:hover{
+    color: rgb(91, 138, 138);
+}
+tr:nth-child(even) {
+    background-color: #55b8e7;
+}
+tr:nth-child(odd) {
+    background-color: #95c5dc;
+}
+table{
+    border-collapse: collapse;
+    background-color:rgb(1, 177, 208);
+    align-items: center;
+    text-align: center;
+    height: 200%;
+}
+th{
+    color: rgb(0, 0, 0);
+    background-color:rgb(0, 54, 215);
+    font-family: 'Cabin';
+    border-right:1px solid rgb(0, 0, 05);
+}
+#name{
+    cursor: pointer;
+}
+td{
+    font-family: 'B612 Mono';
+    color: white;
+}
+.searchDiv{
+    width: 100%;
+    align-items: center;
+    margin: 30px 0px;
+}
+.pageNameDiv{
+    align-items: center;
+    text-align: center;
+}
+#search-input{
+    background-color: #55b8e7;
+    font-family: 'Changa';
+    border-radius: 15px;
+    width: 600px;
+    background-image: url('searchIcon.png');
+    padding-left: 30px;
+    background-size:35px ;
+    background-repeat: no-repeat;
+    font-size: 15px;
+    text-align: center;
+    margin: auto;
+    color: white;
+}
+h4{
+    font-family: 'Ms Madi';
+    color: rgb(255, 255, 255);
+}
+h1{
+    font-family: 'Gideon Roman';
+    font-size: 50px;
+    color: #00aeff;
+
+}
+@media screen  and (min-width:1840px){
+    .tableWidth{
+        font-size: 25px;
+        padding: 15px;
+        height: 100px;
+    }
+    #search-input{
+        width: 1200px;
+        height: 60px;
+        background-size:55px ;
+        font-size: 22px;
+        align-items: center;
+        text-decoration: none;
+    }
+    h4{
+        font-size: 35px;
+    }
+    h1{
+        font-size: 85px;
+    }
+}
