@@ -1,104 +1,74 @@
 let api_url = 'https://jsonplaceholder.typicode.com/users';
-let myArray=[];
-console.log(myArray);
 let data;
-let result;
+let usersArray = [];
 function getData(){
     return fetch(api_url)
     .then((response) => {
-        myArray = response.json();
-        return myArray;
-    }); 
-}
-console.log(myArray)
-// second way
-// async function getDataMain(){
-//     let meta = await fetch(api_url);
-//     return meta.json()
-// }
-async function buildTable(result = []){
-    let placeholder = document.querySelector("#data-output");
-    let out="";
-    placeholder.innerHTML = '';
-    if(result.length == 0){
-        let myArray = await getData();
-        for(let info of myArray){
-            out+=`
-                <tr>
-                <td>${info.id}</td>
-                <td>${info.name}</td>
-                <td>${info.username}</td>
-                <td>${info.email}</td>
-                <td>${info.address.street},${info.address.suite},${info.address.city},${info.address.zipcode},${info.address.geo.lat},${info.address.geo.lng}</td>
-                <td>${info.phone}</td>
-                <td>${info.website}</td>
-                <td>${info.company.name},${info.company.catchPhrase},${info.company.bs}</td>
-                </tr>
-            `;
-            
-        }
-    }else{
-        for(let info of result){
-            out+=`
-                <tr>
-                <td>${info.id}</td>
-                <td>${info.name}</td>
-                <td>${info.username}</td>
-                <td>${info.email}</td>
-                <td>${info.address.street},${info.address.suite},${info.address.city},${info.address.zipcode},${info.address.geo.lat},${info.address.geo.lng}</td>
-                <td>${info.phone}</td>
-                <td>${info.website}</td>
-                <td>${info.company.name},${info.company.catchPhrase},${info.company.bs}</td>
-                </tr>
-            `;
-            
-        }
-    }
+        return response.json();
+    }).then((data)=> {
+        usersArray = data;
+        return data;}); 
     
+}
+async function buildTable(result = []){
+    let placeholder = document.getElementById("data-output");
+    let out="";
+    for(let info of result){
+        let {id,name,username,email,address: {street,suite,city,zipcode,geo:{lat,lng}},phone,website,company:{name:n,catchPhrase:cp,bs}} = info
+        out+=`
+            <tr class="trClass">
+            <td>${id}</td>
+            <td>${name}</td>
+            <td>${username}</td>
+            <td>${email}</td>
+            <td>${street},${suite},${city},${zipcode},${lat},${lng}</td>
+            <td>${phone}</td>
+            <td>${website}</td>
+            <td>${n},${cp},${bs}</td>
+            </tr>
+        `;  
+    }
     placeholder.innerHTML = out;
 }
-buildTable();
 $('#nameId').on('click',async function(){
     let order = $(this).data('order');
     let arrow = $(this).html();
-    arrow = arrow.substring(0, arrow.length -1);
-    myArray = await getData();
-    if(order == 'normal'){
-        $(this).data('order',"desc");
-        myArray = myArray.sort((a, b) => (a.name > b.name ? 1 : 1));
-        arrow='Name ';
-        
-    }else if(order == 'desc'){
+    console.log(order, arrow)
+    arrow = arrow.substring(0, arrow.length - 1);
+    if(order == 'desc'){
         $(this).data('order',"asc");
-        myArray = myArray.sort((a, b) => (a.name > b.name ? 1 : -1));
+        usersArray = usersArray.sort((a, b) => (a.name > b.name ? 1 : -1));
         arrow+=' &#9660;';
     }else if(order =='asc'){
-        $(this).data('order',"normal");
-        myArray = myArray.sort((a, b) => (a.name > b.name ? -1 : 1));
+        $(this).data('order',"desc");
+        usersArray = usersArray.sort((a, b) => (a.name > b.name ? -1 : 1));
         arrow+=' &#9650;';
     }
     $(this).html(arrow);
-    buildTable(myArray);
+    buildTable(usersArray);
 });
 $('#search-input').on('keyup',async function(){
     let value = $(this).val(); 
-    let info = await getData();
-    let result = searchTable(value,info);
+    let result = searchTable(value);
     return  buildTable(result);
 })
-function searchTable(value,data){
+function searchTable(value){
     let filteredData = [];
-    for(let i=0;i<data.length;i++){
+    for(let i=0;i<usersArray.length;i++){
         value = value.toLowerCase();
-        let name = data[i].name.toLowerCase();
-        let address = `${data[i].address.street.toLowerCase()}, ${data[i].address.suite.toLowerCase()}, ${data[i].address.city.toLowerCase()}, ${data[i].address.zipcode.toLowerCase()}, ${data[i].address.geo.lat.toLowerCase()}, ${data[i].address.geo.lng.toLowerCase()}`;
-        let company = `${data[i].company.name.toLowerCase()}, ${data[i].company.catchPhrase.toLowerCase()}, ${data[i].company.bs.toLowerCase()}`;
+        let name = usersArray[i].name.toLowerCase();
+        let address = `${usersArray[i].address.street.toLowerCase()}, ${usersArray[i].address.suite.toLowerCase()}, ${usersArray[i].address.city.toLowerCase()}, ${usersArray[i].address.zipcode.toLowerCase()}, ${usersArray[i].address.geo.lat.toLowerCase()}, ${usersArray[i].address.geo.lng.toLowerCase()}`;
+        let company = `${usersArray[i].company.name.toLowerCase()}, ${usersArray[i].company.catchPhrase.toLowerCase()}, ${usersArray[i].company.bs.toLowerCase()}`;
         if(address.includes(value) || company.includes(value) || name.includes(value)){
-            filteredData.push(data[i]);
-            console.log(filteredData);
+            filteredData.push(usersArray[i]);
         }
     }
     return filteredData;
 }
-
-
+function tLC(ele){
+    return ele.toLowerCase();
+}
+$( document ).ready(async function() {
+    result = await getData();
+    await buildTable(result);
+})
