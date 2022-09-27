@@ -14,7 +14,7 @@ async function buildTable(result = []){
     let placeholder = document.getElementById("data-output");
     let out="";
     for(let info of result){
-        let {id,name,username,email,address: {street,suite,city,zipcode,geo:{lat,lng}},phone,website,company:{name:n,catchPhrase:cp,bs}} = info
+        let {id,name,username,email,phone,address:{street,suite,city,zipcode,geo:{lat,lng}},website,company:{name:n,catchPhrase:cp,bs}} = info;
         out+=`
             <tr class="trClass">
             <td>${id}</td>
@@ -33,7 +33,6 @@ async function buildTable(result = []){
 $('#nameId').on('click',async function(){
     let order = $(this).data('order');
     let arrow = $(this).html();
-    console.log(order, arrow)
     arrow = arrow.substring(0, arrow.length - 1);
     if(order == 'desc'){
         $(this).data('order',"asc");
@@ -54,15 +53,15 @@ $('#search-input').on('keyup',async function(){
 })
 function searchTable(value){
     let filteredData = [];
-    for(let i=0;i<usersArray.length;i++){
-        value = value.toLowerCase();
-        let name = usersArray[i].name.toLowerCase();
-        let address = `${usersArray[i].address.street.toLowerCase()}, ${usersArray[i].address.suite.toLowerCase()}, ${usersArray[i].address.city.toLowerCase()}, ${usersArray[i].address.zipcode.toLowerCase()}, ${usersArray[i].address.geo.lat.toLowerCase()}, ${usersArray[i].address.geo.lng.toLowerCase()}`;
-        let company = `${usersArray[i].company.name.toLowerCase()}, ${usersArray[i].company.catchPhrase.toLowerCase()}, ${usersArray[i].company.bs.toLowerCase()}`;
-        if(address.includes(value) || company.includes(value) || name.includes(value)){
-            filteredData.push(usersArray[i]);
-        }
-    }
+    let add,comp;
+            usersArray.filter((info) => {
+                let {address:{street,suite,city,zipcode,geo:{lat,lng}},company:{name:n,catchPhrase:cp,bs}} = info;
+                let val = tLC(value);
+                add = `${tLC(street)},${tLC(suite)},${tLC(city)},${tLC(zipcode)},${tLC(lat)},${tLC(lng)}`;
+                comp = `${tLC(n)},${tLC(cp)},${tLC(bs)}`;
+                return  add.includes(val) ? filteredData.push(info) :
+                        comp.includes(val)? filteredData.push(info):false;
+            });
     return filteredData;
 }
 function tLC(ele){
