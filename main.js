@@ -1,20 +1,36 @@
 let api_url = 'https://jsonplaceholder.typicode.com/users';
-let data;
 let usersArray = [];
-function getData(){
-    return fetch(api_url)
+
+function getData() {
+  return fetch(api_url)
     .then((response) => {
-        return response.json();
-    }).then((data)=> {
-        usersArray = data;
-        return data;}); 
-    
+      return response.json();
+    })
+    .then((data) => {
+      usersArray = data;
+      return data;
+    });
 }
 async function buildTable(result = []){
-    let placeholder = document.getElementById("data-output");
+    let placeholder = $("#data-output")[0];
     let out="";
     for(let info of result){
-        let {id,name,username,email,phone,address:{street,suite,city,zipcode,geo:{lat,lng}},website,company:{name:n,catchPhrase:cp,bs}} = info;
+        let {
+          id,
+          name,
+          username,
+          email,
+          phone,
+          address: {
+            street,
+            suite,
+            city,
+            zipcode,
+            geo: { lat, lng },
+          },
+          website,
+          company: { name: n, catchPhrase: cp, bs },
+        } = info;
         out+=`
             <tr class="trClass">
             <td>${id}</td>
@@ -54,14 +70,22 @@ $('#search-input').on('keyup',async function(){
 function searchTable(value){
     let filteredData = [];
     let add,comp;
-            usersArray.filter((info) => {
-                let {address:{street,suite,city,zipcode,geo:{lat,lng}},company:{name:n,catchPhrase:cp,bs}} = info;
-                let val = tLC(value);
-                add = `${tLC(street)},${tLC(suite)},${tLC(city)},${tLC(zipcode)},${tLC(lat)},${tLC(lng)}`;
-                comp = `${tLC(n)},${tLC(cp)},${tLC(bs)}`;
-                return  add.includes(val) ? filteredData.push(info) :
-                        comp.includes(val)? filteredData.push(info):false;
-            });
+    filteredData = usersArray.filter((info) => {
+      let {
+        address: {
+          street,
+          suite,
+          city,
+          zipcode,
+          geo: { lat, lng },
+        },
+        company: { name: n, catchPhrase: cp, bs },
+      } = info;
+      let val = tLC(value);
+      add = `${tLC(street)},${tLC(suite)},${tLC(city)},${tLC(zipcode)},${tLC(lat)},${tLC(lng)}`;
+      comp = `${tLC(n)},${tLC(cp)},${tLC(bs)}`;
+      return add.includes(val) || comp.includes(val);
+    });
     return filteredData;
 }
 function tLC(ele){
