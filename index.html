@@ -1,36 +1,44 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>json api</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=B612:ital@1&family=Cabin:ital@1&family=Changa:wght@200&family=Gideon+Roman&family=Ms+Madi&display=swap" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+        <link rel="stylesheet" href="main.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" defer></script>
+        <script src="main.js" defer></script>
     </head>
-    <style>
-        table, thead{
-            background-color: wheat;
-            align-items: center;
-            text-align: center;
-        }
-    </style>
     <body>
-        <table border="1" style="border:3px blue solid;" class="table-responsive">
-            <thead>
-                <tr>
-                    <th>id</th>
-                    <th>Name</th>
-                    <th>UserName</th>
-                    <th>Email</th>
-                    <th>Address{street,suite,city,zipcode,geo(lat,lng)</th>
-                    <th>Phone</th>
-                    <th>Website</th>
-                    <th>company{name,catchPhrase,bs}</th>
-                </tr>
-            </thead>
-            <tbody id="data-output">
-
-            </tbody>
-        </table>
-        <script src="main.js"></script>
+        <div class="pageNameDiv">
+            <h1>Anani Web API</h1>
+            <h4>Client's happiness Our Matters</h4>
+        </div>
+        <div class="searchDiv">
+            <input id="search-input" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <div class="tableDiv">
+            <table class="table tableWidth table-rsponsive">
+                <thead id="theadDesign">
+                    <tr>
+                        <th data-column="id" data-order="desc">ID</th>
+                        <th id="nameId" data-column="name" data-order="desc">Name &#9660;</th>
+                        <th data-column="username" data-order="desc">UserName</th>
+                        <th data-column="email" data-order="desc">Email</th>
+                        <th data-column="address" data-order="desc">Address</th>
+                        <th data-column="phone" data-order="desc">Phone</th>
+                        <th data-column="website" data-order="desc">Website</th>
+                        <th data-column="company" data-order="desc">Company</th>
+                    </tr>
+                </thead>
+                <tbody id="data-output">
+                </tbody>
+            </table>
+        </div>
+        
+        
     </body>
 </html>
